@@ -26,5 +26,6 @@ int count_pipe(t_token *tokens)
         temp_tokens = temp_tokens->next_token;
     }
     count++;
+    // printf("pipe %d", count);
     return (count);
 }

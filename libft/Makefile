@@ -1,14 +1,11 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: saait-si <saait-si@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/11/20 15:08:09 by salaoui           #+#    #+#              #
-#    Updated: 2024/09/20 23:38:13 by saait-si         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+
+RED = "\033[0;31m"
+YELLOW = "\033[0;33m"
+BLACK = "\033[0m"
+MAGENTA= "\033[1;35m"
+CYAN = "\033[36m"
+GREEN0= "\033[32m"
+GREEN1 = "\033[38;5;121m"
 
 SRC = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
       ft_strlen.c ft_memset.c ft_memcpy.c ft_bzero.c ft_memmove.c \
@@ -20,13 +17,6 @@ SRC = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 SRCB = ft_lstnew_bonus.c ft_lstsize_bonus.c ft_lstadd_front_bonus.c \
 	   ft_lstadd_back_bonus.c ft_lstlast_bonus.c
 
-RED = "\033[0;31m"
-YELLOW = "\033[0;33m"
-BLACK = "\033[0m"
-MAGENTA= "\033[1;35m"
-CYAN = "\033[36m"
-GREEN0= "\033[32m"
-GREEN1 = "\033[38;5;121m"
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror

@@ -36,9 +36,9 @@ Info : PATH_MAX's a system defined the maximent path lenght (in linux 4096 in ma
 
 
 ---------> 31/10 <---------  
-🤍 .Export:
-    hadling export alone
-    Handling export key = value;
-    Handling export with number+key (8asd)
-    case: export VAR --> nothing happened 
-🤍 .WARNING: Check the .o in Makefile ⏳  
+🤍 .Export:    
+    hadling export alone    
+    Handling export key = value;    
+    Handling export with number+key (8asd)   
+    case: export VAR --> nothing happened    
+🤍 .WARNING: Check the .o in Makefile ⏳   

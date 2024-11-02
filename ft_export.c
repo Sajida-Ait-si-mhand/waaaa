@@ -1,60 +1,5 @@
 #include "minishell.h"
 
-// void ft_env_export_once(t_minishell data)
-// {
-//     int i = 0;
-//     t_env *head = NULL;
-//     t_env *last_node = NULL;
-//     while(data.envirement[i] != NULL)
-//     {
-//         t_env *cmd_env = (t_env *)malloc(sizeof(t_env));
-//         if (!cmd_env)
-//             exit(1);
-//         char *equal_env = strchr(data.envirement[i], '=');
-//         if (equal_env != NULL)
-//         {
-//             cmd_env->key = strndup(data.envirement[i], equal_env - data.envirement[i]);
-//             cmd_env->value = strndup(equal_env + 1, ft_strlen(data.envirement[i] + 1 ));
-// 			cmd_env->equal = '=';
-// 			cmd_env->next = NULL;
-//         }
-//         if( last_node == NULL)
-//             head = cmd_env;
-//         else
-//             last_node->next = cmd_env;
-//         last_node = cmd_env;
-//         printf("declare -x %s %c %s\n",cmd_env->key, cmd_env->equal, cmd_env->value);
-//         i++;
-//     }
-// }
- 
-// void ft_add_to_export_arg(t_minishell data)
-// {
-//     int i = 0;
-//     t_env *head = NULL;
-//     t_env *last_node = NULL;
-//     while(data.envirement[i] != NULL)
-//     {
-//         t_env *cmd_env = (t_env *)malloc(sizeof(t_env));
-//         if (!cmd_env)
-//             exit(1);
-//         char *equal_env = strchr(data.envirement[i], '=');
-//         if (equal_env != NULL)
-//         {
-//             cmd_env->key = strndup(data.envirement[i], equal_env - data.envirement[i]);
-//             cmd_env->value = strndup(equal_env + 1, ft_strlen(data.envirement[i] + 1 ));
-// 			cmd_env->equal = '=';
-// 			cmd_env->next = NULL;
-//         }
-//         if( last_node == NULL)
-//             head = cmd_env;
-//         else
-//             last_node->next = cmd_env;
-//         last_node = cmd_env;
-//         i++;
-//     }
-// }
-
 void sort_env(t_senv *node)
 {
    if (node == NULL || node->next == NULL)
@@ -78,13 +23,12 @@ void sort_env(t_senv *node)
     sort_env(node->next);
 }
 
-void ft_env_export_once(t_minishell data)
+void ft_env_export_once(t_minishell data, int active)
 {
     t_senv *head = NULL;
     t_senv *last_node = NULL;
 
-     int i = 0;
-
+    int i = 0;
     while (data.envirement[i] != NULL)
     {
         t_senv *cmd_env = (t_senv *)malloc(sizeof(t_senv));
@@ -108,76 +52,58 @@ void ft_env_export_once(t_minishell data)
         last_node = cmd_env;
         i++;
     }
+    
+    if (active == 1)
+        sort_env(head);
+    
     t_senv *current = head;
-    while (current) {
-        sort_env(head); 
-        current = current->next;
-    }
-
-    current = head;
-    while (current) {
-        printf("declare -x %s %c %s\n", current->skey, current->sequal, current->svalue);
+    while (current)
+    {
+        if (active == 1)
+            printf("declare -x %s=%s\n", current->skey, current->svalue);
         current = current->next;
     }
 }
-
-
-//pupose : to slot between the key and the value and print them as well 
 
 void ft_add_to_export_arg(t_minishell data)
 {
-    // if (data.tokens->data || data.tokens->next_token->data || data.tokens->next_token->next_token->data)
-    //     return ;
-    t_env *expo = malloc(sizeof(t_env ));
-    if (!expo)
-        return ;
-    // data.tokens->data = data.tokens->next_token->data;
-    // Handling the numbers error:
     int i = 0;
-    while (data.tokens->next_token->data[i] >= '0' && data.tokens->next_token->data[i] <= '9')
+    t_env *expo = malloc(sizeof(t_env));
+
+    if (!expo)
+        return;
+
+    if (data.tokens->next_token->data[i] >= '0' && data.tokens->next_token->data[i] <= '9')
     {
         printf("bash: export: `%s': not a valid identifier\n", data.tokens->next_token->data);
-        i++;
-    } 
-    //copy the new args and add them (in the process)
-    int j = 0; // testeur
-    while ((ft_strchr(data.tokens->next_token->data, '=') && data.tokens->next_token->data && data.tokens->next_token))
-    {
-        printf(" \033[0;31m data.tokens->data[i] :%s \033[0m\n", data.tokens->next_token->data);
-        char *word =  ft_strchr(data.tokens->next_token->data, '=');
-        printf( "\033[36m word: %s \033[0m\n", word);
-        expo->equal = '=';
-        if (word != NULL) 
-        {
-            expo->value = strndup(data.tokens->next_token->data, word - data.tokens->next_token->data);
-            expo->key = strndup(  word +1, ft_strlen(data.tokens->next_token->data + 1) );
-            printf("\033[36m expo->value: %s \033[0m\n", expo->value);
-            printf("\033[36m expo->key: %s \033[0m\n", expo->key);
-        }
-        // printf("word ---->%s\n", word);
-        // printf("\033[32m data.tokens->data -->%s \033[0m\n", data.tokens->data);
-        // printf("\033[32m export->value -->%s \033[0m\n", expo->value);
-
-        data.tokens = data.tokens->next_token;
-        if (! data.tokens->next_token)
-            return ;
-        // j++; // testeur
+        free(expo);  
+        return;
     }
 
-
-
-    // Move to the next token
-    data.tokens = data.tokens->next_token;
-    j++;
+    char *splitVar = ft_strchr(data.tokens->next_token->data, '=');
+    if (splitVar != NULL)
+    {
+        expo->key = strndup(data.tokens->next_token->data, splitVar - data.tokens->next_token->data);
+        expo->value = strndup(splitVar + 1, ft_strlen(data.tokens->next_token->data + 1));
+        printf("Exporting : %s=%s\n", expo->key, expo->value);
+    }
+    
+    free(expo);
 }
 
-void ft_export (t_minishell data)
+void ft_export(t_minishell data)
 {
+    int active = 1;
+
+  
     if (data.tokens != NULL && data.tokens->next_token == NULL)
-       ft_env_export_once(data);
+    {
+        ft_env_export_once(data, active);
+    }
     else
     {
-        printf("\033[0;31m Ila dis kra \033[0m\n");
+        active = 0;
         ft_add_to_export_arg(data);
+        ft_env_export_once(data, active);
     }
 }

@@ -34,7 +34,7 @@ typedef struct s_senv
 typedef enum e_token_type
 {
 	WORD,
-	PIPE,
+	PIPE, 
 	HER_DOC,
 	OUT_REDIR,
 	APPEND,
@@ -103,7 +103,7 @@ void ft_backup(t_env **head, t_minishell data);
 void ft_env_unset(t_minishell data);
 void	ft_putendl_fd(char *s, int fd);
 void ft_export (t_minishell data);
-void ft_env_export_once(t_minishell data);
+void ft_env_export_once(t_minishell data, int active);
 void sort_env(t_senv *node);
 void ft_add_to_export_arg(t_minishell data);
 
