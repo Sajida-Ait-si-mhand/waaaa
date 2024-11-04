@@ -55,7 +55,7 @@ void ft_backup(t_env **head, t_minishell data)
 }
 
 // I called the function normaly of env.
-void ft_env(t_minishell data)
+void ft_env(t_minishell data, t_env *expo)
 {
     int i = 0;
     t_env *head = NULL;
@@ -83,6 +83,10 @@ void ft_env(t_minishell data)
             last_node->next = cmd_env;
         last_node = cmd_env;
         i++;
+    }
+    if (expo != NULL)
+    {
+        printf("%s=%s", expo->key, expo->value);
     }
 }
 

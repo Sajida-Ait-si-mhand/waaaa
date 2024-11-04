@@ -96,7 +96,7 @@ void ft_echo(t_minishell cmd);
 int ft_cd(t_minishell data);
 void ft_pwd(t_minishell cmd);
 void check_command(t_minishell data);
-void ft_env(t_minishell data);
+void ft_env(t_minishell data, t_env *expo);
 void ft_exit(t_minishell data);
 void ft_unset(t_env *env_list,t_minishell data);
 void ft_backup(t_env **head, t_minishell data);
