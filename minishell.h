@@ -96,7 +96,7 @@ void ft_echo(t_minishell cmd);
 int ft_cd(t_minishell data);
 void ft_pwd(t_minishell cmd);
 void check_command(t_minishell data);
-void ft_env(t_minishell data, t_env *expo);
+void ft_env(t_minishell data);
 void ft_exit(t_minishell data);
 void ft_unset(t_env *env_list,t_minishell data);
 void ft_backup(t_env **head, t_minishell data);
@@ -106,7 +106,7 @@ void ft_export (t_minishell data);
 void ft_env_export_once(t_minishell data, int active);
 void sort_env(t_senv *node);
 void ft_add_to_export_arg(t_minishell data);
-
+char *ft_strndup(char *str, int j);
 // void ft_add_to_export_aloha(t_minishell data);
 // minitest in the end of prog
 // cat lksdj < dalkf;> sdkfj<<sdf >>dslfj |ksdjj|osdfij|sdkfj+

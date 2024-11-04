@@ -34,17 +34,9 @@ void ft_backup(t_env **head, t_minishell data)
             printf("\033[36m   \\/  \033[0m \n");
 
             if (prev == NULL)
-            {
                 *head = tmp->next;
-            }
             else 
-            {
-                // Skip over the current node
                 prev->next = tmp->next;
-            }
-
-            // free(tmp);  // Free the current node
-            // break;  
             free(tmp);
             tmp = (prev == NULL) ? *head : prev->next;  // Adjust the current pointer
             continue; 
@@ -55,10 +47,9 @@ void ft_backup(t_env **head, t_minishell data)
 }
 
 // I called the function normaly of env.
-void ft_env(t_minishell data, t_env *expo)
+void ft_env(t_minishell data)
 {
     int i = 0;
-    (void)expo;
     t_env *head = NULL;
     t_env *last_node = NULL;
     

@@ -64,37 +64,12 @@ void ft_env_export_once(t_minishell data, int active)
         current = current->next;
     }
 }
-
-// void ft_add_to_export_arg(t_minishell data)
-// {
-//     int i = 0;
-//     t_env *expo = malloc(sizeof(t_env));
-
-//     if (!expo)
-//         return;
-
-//     if (data.tokens->next_token->data[i] >= '0' && data.tokens->next_token->data[i] <= '9')
-//     {
-//         printf("bash: export: `%s': not a valid identifier\n", data.tokens->next_token->data);
-//         free(expo);  
-//         return;
-//     }
-
-//     char *splitVar = ft_strchr(data.tokens->next_token->data, '=');
-//     if (splitVar != NULL)
-//     {
-//         expo->key = strndup(data.tokens->next_token->data, splitVar - data.tokens->next_token->data);
-//         expo->value = strndup(splitVar + 1, ft_strlen(data.tokens->next_token->data + 1));
-//         printf("Exporting : %s=%s\n", expo->key, expo->value);
-//     }
-    
-//     free(expo);
-// }
-
 void ft_add_to_export_arg(t_minishell data) 
 {
 
-    int i = 0;
+    int i ;
+
+    i = 0;
     t_env *expo = malloc(sizeof(t_env));
 
     if (!expo) {
@@ -103,15 +78,15 @@ void ft_add_to_export_arg(t_minishell data)
     }
 
     if (data.tokens->next_token->data[i] >= '0' && data.tokens->next_token->data[i] <= '9') {
-        fprintf(stderr, "bash: export: `%s': not a valid identifier\n", data.tokens->next_token->data);
+        printf("bash: export: `%s': not a valid identifier\n", data.tokens->next_token->data);
         free(expo);
         return;
     }
 
-    char *splitVar = strchr(data.tokens->next_token->data, '=');
+    char *splitVar = ft_strchr(data.tokens->next_token->data, '=');
     if (splitVar != NULL) {
-        expo->key = strndup(data.tokens->next_token->data, splitVar - data.tokens->next_token->data);
-        expo->value = strndup(splitVar + 1, strlen(splitVar + 1));
+        expo->key = ft_strndup(data.tokens->next_token->data, splitVar - data.tokens->next_token->data);
+        expo->value = ft_strndup(splitVar + 1, strlen(splitVar + 1));
     }
     i = 0;
     while (data.envirement[i] != NULL) {
@@ -119,31 +94,26 @@ void ft_add_to_export_arg(t_minishell data)
     }
 
     // Allocate memory for the new environment variable string
-    char *new_env_str = malloc(strlen(expo->key) + 1 + strlen(expo->value) + 1);
+    char *new_env_str = malloc(ft_strlen(expo->key) + 1 + ft_strlen(expo->value) + 1);
     if (!new_env_str) {
         perror("malloc");
         exit(EXIT_FAILURE);
     }
 
     // Concatenate the key, equal sign, and value into the new string
-    sprintf(new_env_str, "%s=%s", expo->key, expo->value);
+    printf("%s=%s", expo->key, expo->value);
 
     // Assign the new string to the next available position in the array
     data.envirement[i] = new_env_str;
     data.envirement[i + 1] = NULL; // Null-terminate the array
 
     printf("Exporting: %s=%s\n", expo->key, expo->value);
-    // } else {
-    //     fprintf(stderr, "bash: export: `%s': not a valid identifier\n", data.tokens->next_token->data);
-    //     free(expo);
-    // }
 }
 
 void ft_export(t_minishell data)
 {
     int active = 1;
 
-  
     if (data.tokens != NULL && data.tokens->next_token == NULL)
     {
         ft_env_export_once(data, active);
